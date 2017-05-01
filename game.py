@@ -27,21 +27,22 @@ class Game:
 			newpoints = 0
 			r = mv[0]
 			c = mv[1]
+			print(mv)
       # Even Row
 			if r % 2 == 0:
 				# Check top
-				if ((r != 0) and (self.board[r, c - 1] and self.board[r, c - 2] and self.board[r + 1, c - 1]) == True):
+				if ((r != 0) and (self.board[r - 1, c] and self.board[r - 2, c] and self.board[r - 1, c + 1]) == True):
 					newpoints += 1
 				# Check bottom
-				if ((r != 10) and (self.board[r + 1, c + 1] and self.board[r, c + 2] and self.board[r, c + 1]) == True):
+				if ((r != 10) and (self.board[r + 1, c + 1] and self.board[r + 2, c] and self.board[r + 1, c]) == True):
 					newpoints += 1
 			# Odd Row
 			else:
 				# Check left
-				if ((c != 0) and (self.board[r - 1, c + 1] and self.board[r - 1, c] and self.board[r - 1, c - 1]) == True):
+				if ((c != 0) and (self.board[r + 1, c - 1] and self.board[r, c - 1] and self.board[r - 1, c - 1]) == True):
 					newpoints += 1
 				# Check right
-				if ((c != 5) and (self.board[r, c - 1] and self.board[r + 1, c] and self.board[r, c + 1]) == True):
+				if ((c != 5) and (self.board[r - 1, c] and self.board[r, c + 1] and self.board[r + 1, c + 1]) == True):
 					newpoints += 1
 			self.score[p.playernum] += newpoints
 			if newpoints == 0 or not self.validmoves():
