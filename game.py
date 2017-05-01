@@ -25,12 +25,24 @@ class Game:
 			self.board[mv] = True
 			# Check for a new filled in box
 			newpoints = 0
+			r = mv[0]
+			c = mv[1]
+      # Even Row
 			if mv[0] % 2 == 0:
-				# Check above & below
-				n = 1
+				# Check top
+				if ((self.board[r, c - 1] and self.board[r, c - 2] and self.board[r + 1, c - 1]) == True):
+					newpoints += 1
+				# Check bottom
+				if ((self.board[r + 1, c + 1] and self.board[r, c + 2] and self.board[r, c + 1]) == True):
+					newpoints += 1
+			# Odd Row
 			else:
-				# Check left & right
-				n = 2
+				# Check left
+				if ((self.board[r - 1, c + 1] and self.board[r - 1, c] and self.board[r - 1, c - 1]) == True):
+					newpoints += 1
+				# Check right
+				if ((self.board[r, c - 1] and self.board[r + 1, c] and self.board[r, c + 1]) == True):
+					newpoints += 1
 			self.score[p.playernum] += newpoints
 			if newpoints == 0 or not self.validmoves():
 				turndone = True
