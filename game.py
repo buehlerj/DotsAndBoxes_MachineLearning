@@ -9,6 +9,32 @@ class Game:
 		# Fill the invalid lines
 		for r in [0, 2, 4, 6, 8, 10]:
 			self.board[r, 5] = True
+
+	def __str__(self):
+		space = "\u2008\u2008"
+		bigspace = "  "
+		dot = "\u2022"
+		hline = "\u2006\u2500\u2500\u2006"
+		vline = "|"
+		board = ""
+		for r in range(self.board.shape[0]):
+			if r % 2 == 0:
+				board += dot
+				for c in range(self.board.shape[1] - 1):
+					if self.board[r, c]:
+						board += hline
+					else:
+						board += bigspace
+					board += dot
+			else:
+				for c in range(self.board.shape[1]):
+					if self.board[r, c]:
+						board += vline
+					else:
+						board += space
+					board += bigspace
+			board += "\n"
+		return board
 	
 	def validmoves(self):
 		moves = []
@@ -50,7 +76,7 @@ class Game:
 				print("Player:\t" + str(p.playernum))
 				print("Move:\t" + str(mv))
 				print("New Points:\t" + str(newpoints))
-				print(self.board)
+				print(self)
 				print(self.score)
 
 			if newpoints == 0 or not self.validmoves():
