@@ -56,23 +56,23 @@ class Game:
 			# Even Row
 			if r % 2 == 0:
 				# Check top
-				if (r != 0) and (self.board[r - 1, c] and self.board[r - 2, c] and self.board[r - 1, c + 1]) is True:
+				if (r != 0) and (self.board[r - 1, c] and self.board[r - 2, c] and self.board[r - 1, c + 1]) == True:
 					newpoints += 1
 				# Check bottom
-				if (r != 10) and (self.board[r + 1, c + 1] and self.board[r + 2, c] and self.board[r + 1, c]) is True:
+				if (r != 10) and (self.board[r + 1, c + 1] and self.board[r + 2, c] and self.board[r + 1, c]) == True:
 					newpoints += 1
 			# Odd Row
 			else:
 				# Check left
-				if (c != 0) and (self.board[r + 1, c - 1] and self.board[r, c - 1] and self.board[r - 1, c - 1]) is True:
+				if (c != 0) and (self.board[r + 1, c - 1] and self.board[r, c - 1] and self.board[r - 1, c - 1]) == True:
 					newpoints += 1
 				# Check right
-				if (c != 5) and (self.board[r - 1, c] and self.board[r, c + 1] and self.board[r + 1, c + 1]) is True:
+				if (c != 5) and (self.board[r - 1, c] and self.board[r, c + 1] and self.board[r + 1, c + 1]) == True:
 					newpoints += 1
 			self.score[p.playernum] += newpoints
 
 			if printturns:
-				print("---------------------------------------")
+				print("-----------------")
 				print("Player:\t" + str(p.playernum))
 				print("Move:\t" + str(mv))
 				print("New Points:\t" + str(newpoints))
