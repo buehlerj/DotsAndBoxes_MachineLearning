@@ -5,7 +5,7 @@ class Game:
 	def __init__(self):
 		self.score = [0, 0]
 		# Initialize an empty board
-		self.board = np.full((11,6), False, dtype=bool)
+		self.board = np.full((11, 6), False, dtype=bool)
 		# Fill the invalid lines
 		for r in [0, 2, 4, 6, 8, 10]:
 			self.board[r, 5] = True
@@ -56,18 +56,18 @@ class Game:
 			# Even Row
 			if r % 2 == 0:
 				# Check top
-				if (r != 0) and (self.board[r - 1, c] and self.board[r - 2, c] and self.board[r - 1, c + 1]) == True:
+				if (r != 0) and (self.board[r - 1, c] and self.board[r - 2, c] and self.board[r - 1, c + 1]) is True:
 					newpoints += 1
 				# Check bottom
-				if (r != 10) and (self.board[r + 1, c + 1] and self.board[r + 2, c] and self.board[r + 1, c]) == True:
+				if (r != 10) and (self.board[r + 1, c + 1] and self.board[r + 2, c] and self.board[r + 1, c]) is True:
 					newpoints += 1
 			# Odd Row
 			else:
 				# Check left
-				if (c != 0) and (self.board[r + 1, c - 1] and self.board[r, c - 1] and self.board[r - 1, c - 1]) == True:
+				if (c != 0) and (self.board[r + 1, c - 1] and self.board[r, c - 1] and self.board[r - 1, c - 1]) is True:
 					newpoints += 1
 				# Check right
-				if (c != 5) and (self.board[r - 1, c] and self.board[r, c + 1] and self.board[r + 1, c + 1]) == True:
+				if (c != 5) and (self.board[r - 1, c] and self.board[r, c + 1] and self.board[r + 1, c]) is True:
 					newpoints += 1
 			self.score[p.playernum] += newpoints
 
