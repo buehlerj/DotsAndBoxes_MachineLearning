@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class Game:
 	def __init__(self):
 		self.score = [0, 0]
@@ -35,7 +34,7 @@ class Game:
 					board += bigspace
 			board += "\n"
 		return board
-	
+
 	def validmoves(self):
 		moves = []
 		for r in range(self.board.shape[0]):
@@ -43,7 +42,7 @@ class Game:
 				if not self.board[r, c]:
 					moves += [(r, c)]
 		return moves
-	
+
 	def taketurn(self, p, printturns=False):
 		turndone = False
 		while not turndone:
@@ -56,18 +55,18 @@ class Game:
 			# Even Row
 			if r % 2 == 0:
 				# Check top
-				if (r != 0) and (self.board[r - 1, c] and self.board[r - 2, c] and self.board[r - 1, c + 1]) is True:
+				if (r != 0) and (self.board[r - 1, c] and self.board[r - 2, c] and self.board[r - 1, c + 1]):
 					newpoints += 1
 				# Check bottom
-				if (r != 10) and (self.board[r + 1, c + 1] and self.board[r + 2, c] and self.board[r + 1, c]) is True:
+				if (r != 10) and (self.board[r + 1, c + 1] and self.board[r + 2, c] and self.board[r + 1, c]):
 					newpoints += 1
 			# Odd Row
 			else:
 				# Check left
-				if (c != 0) and (self.board[r + 1, c - 1] and self.board[r, c - 1] and self.board[r - 1, c - 1]) is True:
+				if (c != 0) and (self.board[r + 1, c - 1] and self.board[r, c - 1] and self.board[r - 1, c - 1]):
 					newpoints += 1
 				# Check right
-				if (c != 5) and (self.board[r - 1, c] and self.board[r, c + 1] and self.board[r + 1, c]) is True:
+				if (c != 5) and (self.board[r - 1, c] and self.board[r, c + 1] and self.board[r + 1, c]):
 					newpoints += 1
 			self.score[p.playernum] += newpoints
 
