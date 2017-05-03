@@ -13,3 +13,12 @@ class RandomPlayer:
 		moves = game.validmoves()
 		move = moves[self.random.randint(len(moves))]
 		return move
+
+
+class AIPlayer:
+	def __init__(self):
+		self.playernum = 0
+
+	def pickmove(self, game):
+		moves = game.validmoves()
+		return None
