@@ -2,13 +2,45 @@ import numpy as np
 
 
 class Game:
+	class Board:
+		def __init__(self):
+			# Configure validmoves caching
+			self.validmoves = None
+			self.haschanged = True
+			# Initialize an empty board
+			self.array = np.full((11, 6), False, dtype=bool)
+			self.shape = (11, 6)
+			# Fill the invalid lines
+			for r in [0, 2, 4, 6, 8, 10]:
+				self.array[r, 5] = True
+
+		def __getitem__(self, item):
+			return self.array[item]
+
+		def __setitem__(self, key, value):
+			self.array[key] = value
+			self.haschanged = True
+
+		def __delitem__(self, key):
+			del self.array[key]
+			self.haschanged = True
+
+		def __str__(self):
+			return str(self.array)
+
+		def getvalidmoves(self):
+			if self.haschanged or not self.validmoves:
+				self.validmoves = []
+				for r in range(self.array.shape[0]):
+					for c in range(self.array.shape[1]):
+						if not self.array[r, c]:
+							self.validmoves += [(r, c)]
+			self.haschanged = False
+			return self.validmoves
+
 	def __init__(self):
 		self.score = [0, 0]
-		# Initialize an empty board
-		self.board = np.full((11, 6), False, dtype=bool)
-		# Fill the invalid lines
-		for r in [0, 2, 4, 6, 8, 10]:
-			self.board[r, 5] = True
+		self.board = Game.Board()
 
 	def __str__(self):
 		space = "\u2008\u2008"
@@ -35,15 +67,10 @@ class Game:
 					board += bigspace
 			board += "\n"
 		return board
-	
+
 	def validmoves(self):
-		moves = []
-		for r in range(self.board.shape[0]):
-			for c in range(self.board.shape[1]):
-				if not self.board[r, c]:
-					moves += [(r, c)]
-		return moves
-	
+		return self.board.getvalidmoves()
+
 	def taketurn(self, player, printturns=False):
 		turndone = False
 		while not turndone:
