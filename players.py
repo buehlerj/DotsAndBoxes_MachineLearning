@@ -51,17 +51,24 @@ class AIPlayer:
 		self.currentMove = None
 
 	def pickmove(self, game):
-		moves = game.validmoves()
-		nextMove = self.__epsilonGreedy(game)
-		return nextMove
+		next_move = self.__epsilonGreedy(game.validmoves())
+		return next_move
 
-	def __epsilonGreedy(self, game):
-		validMoves = game.validmoves()
+	def __epsilonGreedy(self, valid_moves):
 		if np.random.uniform() < self.epsilon:
-			return np.random.choice(validMoves)
+			move_index = np.random.randint(len(valid_moves))
+			return valid_moves[move_index]
 		else:
-			Qs = np.array([self.Q.get((tuple(validMoves), m), 0) for m in validMoves])
-			return validMoves[np.argmax(Qs)]
+			next_move = valid_moves[0]
+			next_probability = self.Q.get((tuple(next_move)), 0)
+
+			for m in valid_moves:
+				probability_m = self.Q.get((tuple(m)), 0)
+				if probability_m > next_probability:
+					next_move = m
+					next_probability = probability_m
+
+			return next_move
 
 	def __propagate(self):
 		if self.previousMove is not None:

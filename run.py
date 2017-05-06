@@ -1,7 +1,7 @@
 import game
 import players
 
-p1 = players.RandomPlayer(0)
+p1 = players.AIPlayer(0, epsilon=0.0)
 p2 = players.RandomPlayer(1)
 g = game.Game()
 print("Test Stuff")
