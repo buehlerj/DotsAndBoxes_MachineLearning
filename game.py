@@ -116,3 +116,5 @@ class Game:
 			self.taketurn(p1, printturns=printturns)
 			if len(self.validmoves()) is not 0:
 				self.taketurn(p2, printturns=printturns)
+		p1.postgame(self)
+		p2.postgame(self)
