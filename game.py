@@ -110,8 +110,8 @@ class Game:
 				turndone = True
 
 	def play(self, p1, p2, printturns=False):
-		p1.playernum = 0
-		p2.playernum = 1
+		p1.pregame(0)
+		p2.pregame(1)
 		while len(self.validmoves()) is not 0:
 			self.taketurn(p1, printturns=printturns)
 			if len(self.validmoves()) is not 0:

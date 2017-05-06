@@ -3,15 +3,25 @@ import numpy as np
 class RandomPlayer:
 	def __init__(self, seed=None):
 		self.playernum = 0
-		if seed is not None:
-			self.random = np.random.RandomState(seed)
+		self.seed = seed
+
+	def __buildRandom(self):
+		if self.seed is not None:
+			self.random = np.random.RandomState(self.seed)
 		else:
 			self.random = np.random.RandomState()
+
+	def pregame(self, playernum):
+		self.playernum = playernum
+		self.__buildRandom()
 	
 	def pickmove(self, game):
 		moves = game.validmoves()
 		move = moves[self.random.randint(len(moves))]
 		return move
+
+	def postgame(self, game):
+		return None
 
 
 class AIPlayer:
