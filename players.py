@@ -26,14 +26,14 @@ class RandomPlayer:
 
 
 class AIPlayer:
-	def __init__(self, rho=0.2, epsilonDecayRate = 0.99, epsilon=1.0, seed=None):
+	def __init__(self, rho=0.2, epsilon=1.0, train=True, seed=None):
 		self.playernum = 0
 		self.rho = rho
-		self.epsilonDecayRate = epsilonDecayRate
 		self.epsilon = epsilon
 		self.Q = {}
 		self.currentMove = None
 		self.previousMove = None
+		self.train = train
 		self.seed = seed
 		self.random = None
 		self.__buildRandom()
@@ -73,16 +73,17 @@ class AIPlayer:
 		return move_index
 
 	def __propagate(self):
-		if self.previousMove is not None:
+		if self.train is True and self.previousMove is not None:
 			temporaldifferenceerror = self.rho * (self.Q.get(self.currentMove, 0) - self.Q.get(self.previousMove, 0))
 			self.Q[self.previousMove] = self.Q.get(self.previousMove, 0) + temporaldifferenceerror
 
 	def postgame(self, game):
-		if game.score.index(max(game.score)) is self.playernum:
-			# Winning move, positive reinforcement
-			self.Q[self.currentMove] = 1
-		else:
-			# Losing move, negative reinforcement
-			r = self.rho * (-1 - self.Q.get(self.currentMove, 0))
-			self.Q[self.currentMove] = self.Q.get(self.currentMove, 0) + r
-		self.__propagate()
+		if self.train is True:
+			if game.score.index(max(game.score)) is self.playernum:
+				# Winning move, positive reinforcement
+				self.Q[self.currentMove] = 1
+			else:
+				# Losing move, negative reinforcement
+				r = self.rho * (-1 - self.Q.get(self.currentMove, 0))
+				self.Q[self.currentMove] = self.Q.get(self.currentMove, 0) + r
+			self.__propagate()
