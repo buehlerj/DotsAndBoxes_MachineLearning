@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class RandomPlayer:
 	def __init__(self, seed=None):
 		self.playernum = 0
@@ -51,28 +52,29 @@ class AIPlayer:
 		self.currentMove = None
 
 	def pickmove(self, game):
-		next_move = self.__epsilonGreedy(game.validmoves())
-		return next_move
+		self.__propagate()
+		self.previousMove = self.currentMove
+		moveindex = self.__epsilonGreedy(game.validmoves())
+		self.currentMove = (tuple(game.validmoves()), moveindex)
+		return game.validmoves()[moveindex]
 
 	def __epsilonGreedy(self, valid_moves):
+		move_index = 0
 		if np.random.uniform() < self.epsilon:
 			move_index = np.random.randint(len(valid_moves))
-			return valid_moves[move_index]
 		else:
-			next_move = valid_moves[0]
-			next_probability = self.Q.get((tuple(next_move)), 0)
-
-			for m in valid_moves:
-				probability_m = self.Q.get((tuple(m)), 0)
-				if probability_m > next_probability:
-					next_move = m
-					next_probability = probability_m
-
-			return next_move
+			best_probability = -1 * np.inf
+			for i in range(len(valid_moves)):
+				probability_m = self.Q.get((tuple(valid_moves), i), 0)
+				if probability_m > best_probability:
+					move_index = i
+					best_probability = probability_m
+		return move_index
 
 	def __propagate(self):
 		if self.previousMove is not None:
-			self.Q[self.previousMove] += self.rho * (self.Q[self.currentMove] - self.Q[self.previousMove])
+			temporaldifferenceerror = self.rho * (self.Q.get(self.currentMove, 0) - self.Q.get(self.previousMove, 0))
+			self.Q[self.previousMove] = self.Q.get(self.previousMove, 0) + temporaldifferenceerror
 
 	def postgame(self, game):
 		if game.score.index(max(game.score)) is self.playernum:
@@ -80,5 +82,6 @@ class AIPlayer:
 			self.Q[self.currentMove] = 1
 		else:
 			# Losing move, negative reinforcement
-			self.Q[self.currentMove] += self.rho * (-1 - self.Q[self.currentMove])
+			r = self.rho * (-1 - self.Q.get(self.currentMove, 0))
+			self.Q[self.currentMove] = self.Q.get(self.currentMove, 0) + r
 		self.__propagate()
