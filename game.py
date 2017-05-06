@@ -71,10 +71,10 @@ class Game:
 	def validmoves(self):
 		return self.board.getvalidmoves()
 
-	def taketurn(self, p, printturns=False):
+	def taketurn(self, player, printturns=False):
 		turndone = False
 		while not turndone:
-			mv = p.pickmove(self)
+			mv = player.pickmove(self)
 			self.board[mv] = True
 			# Check for a new filled in box
 			newpoints = 0
@@ -96,11 +96,11 @@ class Game:
 				# Check right
 				if (c != 5) and (self.board[r - 1, c] and self.board[r, c + 1] and self.board[r + 1, c]):
 					newpoints += 1
-			self.score[p.playernum] += newpoints
+			self.score[player.playernum] += newpoints
 
 			if printturns:
 				print("-----------------")
-				print("Player:\t" + str(p.playernum))
+				print("Player:\t" + str(player.playernum))
 				print("Move:\t" + str(mv))
 				print("New Points:\t" + str(newpoints))
 				print(self)
