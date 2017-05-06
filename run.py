@@ -2,8 +2,8 @@ import game
 import players
 import math
 
-p1 = players.AIPlayer(epsilon=1.0)
-p2 = players.RandomPlayer(1)
+p1 = players.AIPlayer(epsilon=1.0, seed=0)
+p2 = players.RandomPlayer(seed=1)
 g = game.Game()
 print("Test Run")
 g.play(p1, p2, printturns=False)

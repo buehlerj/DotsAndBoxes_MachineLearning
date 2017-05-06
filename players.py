@@ -5,6 +5,7 @@ class RandomPlayer:
 	def __init__(self, seed=None):
 		self.playernum = 0
 		self.seed = seed
+		self.__buildRandom()
 
 	def __buildRandom(self):
 		if self.seed is not None:
@@ -14,7 +15,6 @@ class RandomPlayer:
 
 	def pregame(self, playernum):
 		self.playernum = playernum
-		self.__buildRandom()
 	
 	def pickmove(self, game):
 		moves = game.validmoves()
@@ -36,6 +36,7 @@ class AIPlayer:
 		self.previousMove = None
 		self.seed = seed
 		self.random = None
+		self.__buildRandom()
 
 	def __buildRandom(self):
 		if self.seed is not None:
@@ -60,8 +61,8 @@ class AIPlayer:
 
 	def __epsilonGreedy(self, valid_moves):
 		move_index = 0
-		if np.random.uniform() < self.epsilon:
-			move_index = np.random.randint(len(valid_moves))
+		if self.random.uniform() < self.epsilon:
+			move_index = self.random.randint(len(valid_moves))
 		else:
 			best_probability = -1 * np.inf
 			for i in range(len(valid_moves)):
