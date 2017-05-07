@@ -9,7 +9,7 @@ class RandomPlayer:
 
 	def __buildRandom(self):
 		if self.seed is not None:
-			self.random = np.random.RandomState(self.seed)
+			self.random = np.random.RandomState(seed=self.seed)
 		else:
 			self.random = np.random.RandomState()
 
@@ -40,7 +40,7 @@ class AIPlayer:
 
 	def __buildRandom(self):
 		if self.seed is not None:
-			self.random = np.random.RandomState(self.seed)
+			self.random = np.random.RandomState(seed=self.seed)
 		else:
 			self.random = np.random.RandomState()
 
